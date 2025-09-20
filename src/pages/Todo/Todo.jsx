@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 import styles from './Todo.module.css';
 
 export default function Todo() {
@@ -22,27 +22,31 @@ export default function Todo() {
         setTasks(tasks.filter((_, i) => i !== index));
     }
 
+
+
     return (
-        <>
-            <input value={newTask} type="text" placeholder="Enter todo" onChange={(e) => setNewTask(e.target.value)} />
-            <button onClick={addTask} >Add</button>
-            <ul style={{ listStyle: 'none', padding: 0, marginTop: 0 }}>
+        <div className={styles.container}>
+            <div className={styles.row}>
+                <input className={styles.textInput} value={newTask} type="text" placeholder="Enter todo" onChange={(e) => setNewTask(e.target.value)} />
+                <button className={styles.addBtn} onClick={addTask} >Add</button>
+            </div>
+            <ul className={styles.todoList}>
                 {tasks.map((item, index) => (
                     <li key={index} className={styles.row}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
+                        <label className={styles.listItem}>
                             <input type="checkbox" value={item.text} checked={item.completed} onChange={() => markComplete(index)} />
                             <span style={{ textDecoration: item.completed ? 'line-through' : 'none', }}>  {item.text} </span>
                         </label>
-                        <button onClick={() =>
-                            deleteTask(index)
-                        }>
-                            <FaTrash />
+                        <button
+                            className={styles.deleteBtn}
+                            onClick={() => deleteTask(index)}
+                        >
+                            <FaTrash size={20} color='white' />
                         </button>
-                        {/* </div> */}
                     </li>
                 ))}
             </ul>
-        </>
+        </div>
     )
 }
 
